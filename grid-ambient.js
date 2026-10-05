@@ -1,5 +1,4 @@
-(() => {
-  const hero = document.querySelector('.hero');
+document.querySelectorAll('.hero').forEach(hero => {
   const grid = hero?.querySelector('.hero-grid');
   if (!grid) return;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -45,4 +44,4 @@
   }, {threshold: .15}).observe(hero);
   document.addEventListener('visibilitychange', update);
   reducedMotion.addEventListener('change', update);
-})();
+});

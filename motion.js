@@ -1,6 +1,5 @@
 // Pointer motion stays on decorative layers; document geometry never moves.
-const hero = document.querySelector('.hero');
-const grid = hero.querySelector('.hero-grid');
+const heroes = [...document.querySelectorAll('.hero')];
 const motionQuery = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 const targets = [...document.querySelectorAll('.title-line, .section h2, .contact h2, .text-link, .contact-link')];
 const motionItems = targets.map(target => {
@@ -21,6 +20,8 @@ function render() {
   frame = 0;
   if (!motionQuery.matches) return;
   if (lastPointer) {
+    const hero = lastPointer.hero;
+    const grid = hero.querySelector('.hero-grid');
     const rect = hero.getBoundingClientRect();
     const x = lastPointer.x - rect.left;
     const y = lastPointer.y - rect.top;
@@ -46,14 +47,16 @@ function render() {
   }
   pending.clear();
 }
+heroes.forEach(hero => {
 hero.addEventListener('pointermove', event => {
   if (!motionQuery.matches || event.pointerType === 'touch') return;
-  lastPointer = { x: event.clientX, y: event.clientY };
+  lastPointer = { hero, x: event.clientX, y: event.clientY };
   schedule();
 });
 hero.addEventListener('pointerleave', () => {
   lastPointer = null;
   hero.classList.remove('is-tracking');
+});
 });
 function resetItem(item) {
   pending.delete(item);
@@ -74,7 +77,7 @@ function resetMotion() {
   cancelAnimationFrame(frame);
   frame = 0;
   lastPointer = null;
-  hero.classList.remove('is-tracking');
+  heroes.forEach(hero => hero.classList.remove('is-tracking'));
   motionItems.forEach(resetItem);
 }
 window.addEventListener('scroll', resetMotion, { passive: true });

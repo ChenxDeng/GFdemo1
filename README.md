@@ -16,6 +16,8 @@ Publish the root of the `main` branch through GitHub Pages. No build or package 
 
 ## Included interactions
 
+- Centered opening screen with labels, title and slogan; natural scrolling reveals the full competition page.
+
 - Full-width pointer grid and ambient grid pulses, with reduced-motion support.
 - Responsive layout, section navigation and subtle registration-button animation.
 - Registration information dialog; the event registration URL is still pending.
