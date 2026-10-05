@@ -26,7 +26,6 @@
     reset();
     scene.classList.remove('is-enhanced');
     scene.style.removeProperty('height');
-    if (reducedMotion.matches) { layout = null; return; }
     const bounds = stage.getBoundingClientRect();
     const available = innerHeight - header.getBoundingClientRect().height;
     const gutter = parseFloat(getComputedStyle(stage).paddingLeft);
@@ -61,16 +60,16 @@
     if (!layout) return;
     const distance = header.getBoundingClientRect().height - scene.getBoundingClientRect().top;
     const progress = clamp(distance / layout.travel);
-    const movement = ease(progress);
+    const movement = reducedMotion.matches ? (progress >= .5 ? 1 : 0) : ease(progress);
     layout.elements.forEach((el, i) => {
       const from = layout.transforms[i];
       el.style.transform = `translate3d(${from.x * (1-movement)}px,${from.y * (1-movement)}px,0) scale(${1+(from.scale-1)*(1-movement)})`;
     });
-    const reveal = ease(clamp((progress - .28) / .72));
+    const reveal = reducedMotion.matches ? movement : ease(clamp((progress - .28) / .72));
     details.style.transform = `translate3d(0,${layout.detailsShift * (1-reveal)}px,0)`;
     details.style.opacity = String(reveal);
     details.inert = reveal < .95;
-    const registerReveal = ease(clamp((progress - .65) / .35));
+    const registerReveal = reducedMotion.matches ? movement : ease(clamp((progress - .65) / .35));
     button.style.translate = `0 ${layout.transforms[2].y * (1-movement)}px`;
     button.style.setProperty('--register-opacity', String(registerReveal));
     button.style.setProperty('--register-events', registerReveal < .95 ? 'none' : 'auto');

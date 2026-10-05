@@ -307,4 +307,4 @@ main>section{scroll-margin-top:0}
 .hero-stage .hero-tags,.hero-stage h1,.hero-stage .hero-slogan{transform-origin:top left;will-change:transform}
 .hero-stage .hero-details{will-change:transform,opacity}
 .hero-stage .hero-intro #register-button{opacity:var(--register-opacity,1);pointer-events:var(--register-events,auto)}
-@media(prefers-reduced-motion:reduce){.hero-scroll-scene.is-enhanced .hero-stage{position:relative;top:0}.hero-stage .hero-tags,.hero-stage h1,.hero-stage .hero-slogan,.hero-stage .hero-details{will-change:auto}}
+@media(prefers-reduced-motion:reduce){.hero-stage .hero-tags,.hero-stage h1,.hero-stage .hero-slogan,.hero-stage .hero-details{will-change:auto}}
